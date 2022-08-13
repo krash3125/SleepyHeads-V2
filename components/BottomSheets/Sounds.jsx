@@ -5,7 +5,7 @@ import tw from '../../lib/tailwind';
 
 const Sounds = ({ soundsBottomSheetRef }) => {
   // variables
-  const snapPoints = useMemo(() => ['95%'], []);
+  const snapPoints = useMemo(() => ['92%'], []);
 
   return (
     <BottomSheet
@@ -22,7 +22,7 @@ const Sounds = ({ soundsBottomSheetRef }) => {
         />
       )}
     >
-      <View style={tw`m-4 h-5/6 p-2`}>
+      <View style={tw`m-4 mt-2 h-5/6 p-2`}>
         <Text style={tw`text-3.5xl font-800 text-sh-dark-blue text-center`}>
           Sounds
         </Text>

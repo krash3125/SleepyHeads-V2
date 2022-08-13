@@ -6,11 +6,13 @@ import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import icon from '../assets/icon.png';
 import DrawerItems from './DrawerItems';
 import Sounds from './BottomSheets/Sounds';
+import About from './BottomSheets/About';
 
 const screenWidth = Dimensions.get('window').width;
 
 const Drawer = ({ children, drawerRef, pausePreview, resumePreview }) => {
   const soundsBottomSheetRef = useRef();
+  const aboutBottomSheetRef = useRef();
 
   const drawerView = () => {
     return (
@@ -29,7 +31,11 @@ const Drawer = ({ children, drawerRef, pausePreview, resumePreview }) => {
             icon="volume-2"
             onPress={() => soundsBottomSheetRef?.current.expand()}
           />
-          <DrawerItems title="About" icon="info" />
+          <DrawerItems
+            title="About"
+            icon="info"
+            onPress={() => aboutBottomSheetRef?.current.expand()}
+          />
         </View>
       </SafeAreaView>
     );
@@ -52,6 +58,7 @@ const Drawer = ({ children, drawerRef, pausePreview, resumePreview }) => {
         {children}
       </DrawerLayout>
       <Sounds soundsBottomSheetRef={soundsBottomSheetRef} />
+      <About aboutBottomSheetRef={aboutBottomSheetRef} />
     </>
   );
 };

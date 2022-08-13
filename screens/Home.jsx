@@ -10,6 +10,7 @@ import { Audio } from 'expo-av';
 import { BlurView } from 'expo-blur';
 
 import Drawer from '../components/Drawer';
+import Help from '../components/BottomSheets/Help';
 
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.8; //in seconds
@@ -27,6 +28,7 @@ const Home = () => {
 
   let cameraRef = useRef();
   let drawerRef = useRef();
+  let helpBottomSheetRef = useRef();
 
   useEffect(() => {
     (async () => {
@@ -119,7 +121,7 @@ const Home = () => {
               <TouchableOpacity
                 style={tw`ml-auto`}
                 onPress={() => {
-                  // drawerRef.current.openDrawer();
+                  helpBottomSheetRef.current.expand();
                 }}
               >
                 <Feather name="help-circle" size={28} color="white" />
@@ -133,6 +135,7 @@ const Home = () => {
               </Text>
             </View> */}
           </View>
+          <Help helpBottomSheetRef={helpBottomSheetRef} />
         </SafeAreaView>
       </Camera>
     </Drawer>
