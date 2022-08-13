@@ -8,7 +8,7 @@ import tw from '../../lib/tailwind';
 
 const Help = ({ helpBottomSheetRef }) => {
   // variables
-  const snapPoints = useMemo(() => ['75%'], []);
+  const snapPoints = useMemo(() => ['76%'], []);
 
   return (
     <BottomSheet
@@ -17,7 +17,8 @@ const Help = ({ helpBottomSheetRef }) => {
       index={-1}
       snapPoints={snapPoints}
       detached={true}
-      bottomInset={24}
+      bottomInset={19}
+      enableOverDrag={false}
       enablePanDownToClose={true}
       backdropComponent={(props) => (
         <BottomSheetBackdrop
@@ -30,7 +31,7 @@ const Help = ({ helpBottomSheetRef }) => {
     >
       <View style={tw`flex-1 p-2`}>
         <TouchableOpacity
-          style={tw`flex items-right absolute top-[-16px] right-2 pl-5 pr-2 pb-3 z-50`}
+          style={tw`flex absolute top-[-16px] right-2 pl-5 pr-2 pb-3 z-50`}
           onPress={() => helpBottomSheetRef.current.close()}
         >
           <Text
@@ -41,7 +42,7 @@ const Help = ({ helpBottomSheetRef }) => {
           </Text>
         </TouchableOpacity>
         <BottomSheetScrollView>
-          <View style={tw`h-[95%] m-4 mt-2`}>
+          <View style={tw`m-4 mt-2`}>
             <Text style={tw`text-3.5xl font-800 text-sh-dark-blue text-center`}>
               Help
             </Text>
@@ -52,30 +53,32 @@ const Help = ({ helpBottomSheetRef }) => {
               eyes close an alarm will play to alert you.
             </Text>
             <Text
-              style={tw`mt-10 text-2xl font-600 text-sh-dark-blue text-center`}
+              style={tw`mt-8 text-2xl font-600 text-sh-dark-blue text-center`}
             >
               These alerts will notify you on your status:
             </Text>
-            <View
-              style={tw`justify-center items-center mt-8 border-2 border-slate-800 rounded-lg bg-green-500 w-full h-16`}
-            >
-              <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
-                Good Job Staying Awake!!
-              </Text>
-            </View>
-            <View
-              style={tw`justify-center items-center mt-6 border-2 border-slate-800 rounded-lg bg-yellow-500 w-full h-16`}
-            >
-              <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
-                Face Not Detected
-              </Text>
-            </View>
-            <View
-              style={tw`justify-center items-center mt-6 border-2 border-slate-800 rounded-lg bg-red-500 w-full h-16`}
-            >
-              <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
-                Wake Up!!
-              </Text>
+            <View style={tw`mx-10 mt-4 mb-3`}>
+              <View
+                style={tw`h-12 w-full justify-center items-center border-2 border-slate-800 rounded-lg bg-green-500 mt-4`}
+              >
+                <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
+                  Eyes Open
+                </Text>
+              </View>
+              <View
+                style={tw`h-12 w-full justify-center items-center border-2 border-slate-800 rounded-lg bg-yellow-500 mt-4`}
+              >
+                <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
+                  Face Not Detected
+                </Text>
+              </View>
+              <View
+                style={tw`h-12 w-full justify-center items-center border-2 border-slate-800 rounded-lg bg-red-500 mt-4`}
+              >
+                <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
+                  Eyes Closed
+                </Text>
+              </View>
             </View>
           </View>
         </BottomSheetScrollView>

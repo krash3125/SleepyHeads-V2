@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { View, Text, Image } from 'react-native';
 import { SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -8,6 +8,8 @@ import { Camera, CameraType } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import { Audio } from 'expo-av';
 import { BlurView } from 'expo-blur';
+
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import Drawer from '../components/Drawer';
 import Help from '../components/BottomSheets/Help';
@@ -25,6 +27,10 @@ const Home = () => {
   const [faceVisible, setFaceVisible] = useState(false);
   const [eyeOpen, setEyeOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const statusBarHeight = useMemo(() => {
+    return getStatusBarHeight();
+  }, []);
 
   let cameraRef = useRef();
   let drawerRef = useRef();
@@ -98,7 +104,7 @@ const Home = () => {
       )}
       <Camera
         ref={cameraRef}
-        style={tw`flex-1`}
+        style={tw`flex-1 flex flex-col`}
         type={type}
         onFacesDetected={handleFacesDetected}
         faceDetectorSettings={{
@@ -108,34 +114,59 @@ const Home = () => {
           minDetectionInterval: 100,
         }}
       >
-        <SafeAreaView style={tw`flex-1`}>
-          <View style={tw`flex-1 flex flex-col m-6`}>
-            <View style={tw`flex flex-row`}>
+        <BlurView
+          style={tw`h-[${statusBarHeight + 65}px] w-full z-30`}
+          tint="dark"
+          intensity={20}
+        >
+          <View style={tw`w-full mb-4 absolute bottom-0`}>
+            <View style={tw`flex flex-row items-center mx-5`}>
               <TouchableOpacity
                 onPress={() => {
                   drawerRef.current.openDrawer();
                 }}
               >
-                <Feather name="menu" size={28} color="white" />
+                <Feather name="menu" size={28} color="#fff" />
               </TouchableOpacity>
+              <Text
+                style={tw`ml-auto text-3xl font-800 text-center text-sh-dark-blue`}
+              >
+                SleepyHeads
+              </Text>
               <TouchableOpacity
                 style={tw`ml-auto`}
                 onPress={() => {
                   helpBottomSheetRef.current.expand();
                 }}
               >
-                <Feather name="help-circle" size={28} color="white" />
+                <Feather name="help-circle" size={28} color="#fff" />
               </TouchableOpacity>
             </View>
-            {/* <View
-              style={tw`justify-center items-center mt-auto border-2 border-slate-800 rounded-lg bg-green-500 w-full h-16`}
-            >
-              <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
-                Good Job Staying Awake!!
-              </Text>
-            </View> */}
           </View>
-          <Help helpBottomSheetRef={helpBottomSheetRef} />
+        </BlurView>
+        <SafeAreaView style={tw`flex-1`}>
+          {
+            <View style={tw`mx-16 mt-auto mb-3`}>
+              <View
+                style={tw`h-12 w-full justify-center items-center border-2 border-slate-800 rounded-lg ${
+                  !faceVisible
+                    ? 'bg-yellow-500'
+                    : eyeOpen
+                    ? 'bg-green-500'
+                    : 'bg-red-500'
+                }`}
+              >
+                <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
+                  {!faceVisible
+                    ? 'Face Not Detected'
+                    : eyeOpen
+                    ? 'Eyes Open'
+                    : 'Eyes Closed'}
+                </Text>
+              </View>
+            </View>
+          }
+          <Help style={tw`z-50`} helpBottomSheetRef={helpBottomSheetRef} />
         </SafeAreaView>
       </Camera>
     </Drawer>
