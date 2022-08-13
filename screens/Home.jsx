@@ -10,11 +10,12 @@ import { Audio } from 'expo-av';
 import { BlurView } from 'expo-blur';
 
 import Drawer from '../components/Drawer';
+import Help from '../components/BottomSheets/Help';
 
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.8; //in seconds
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(CameraType.front);
 
@@ -23,10 +24,11 @@ const Home = ({ navigation }) => {
 
   const [faceVisible, setFaceVisible] = useState(false);
   const [eyeOpen, setEyeOpen] = useState(true);
-
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  let cameraRef = useRef();
   let drawerRef = useRef();
+  let helpBottomSheetRef = useRef();
 
   useEffect(() => {
     (async () => {
@@ -70,14 +72,12 @@ const Home = ({ navigation }) => {
     await sound.playAsync();
   };
 
-  let cameraRef = useRef();
-
   const pausePreview = () => {
-    cameraRef.pausePreview();
+    cameraRef.current.pausePreview();
     setDrawerOpen(true);
   };
   const resumePreview = () => {
-    cameraRef.resumePreview();
+    cameraRef.current.resumePreview();
     setDrawerOpen(false);
   };
 
@@ -92,14 +92,12 @@ const Home = ({ navigation }) => {
     >
       {drawerOpen && (
         <BlurView
-          style={tw`absolute top-0 left-0 h-full w-full z-50`}
+          style={tw`absolute top-0 left-0 h-full w-full z-30`}
           intensity={50}
         />
       )}
       <Camera
-        ref={(ref) => {
-          cameraRef = ref;
-        }}
+        ref={cameraRef}
         style={tw`flex-1`}
         type={type}
         onFacesDetected={handleFacesDetected}
@@ -111,16 +109,33 @@ const Home = ({ navigation }) => {
         }}
       >
         <SafeAreaView style={tw`flex-1`}>
-          <View style={tw`flex-1 m-6`}>
-            <TouchableOpacity
-              onPress={() => {
-                drawerRef.current.openDrawer();
-                cameraRef.pausePreview();
-              }}
+          <View style={tw`flex-1 flex flex-col m-6`}>
+            <View style={tw`flex flex-row`}>
+              <TouchableOpacity
+                onPress={() => {
+                  drawerRef.current.openDrawer();
+                }}
+              >
+                <Feather name="menu" size={28} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`ml-auto`}
+                onPress={() => {
+                  helpBottomSheetRef.current.expand();
+                }}
+              >
+                <Feather name="help-circle" size={28} color="white" />
+              </TouchableOpacity>
+            </View>
+            {/* <View
+              style={tw`justify-center items-center mt-auto border-2 border-slate-800 rounded-lg bg-green-500 w-full h-16`}
             >
-              <Feather name="menu" size={28} color="white" />
-            </TouchableOpacity>
+              <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
+                Good Job Staying Awake!!
+              </Text>
+            </View> */}
           </View>
+          <Help helpBottomSheetRef={helpBottomSheetRef} />
         </SafeAreaView>
       </Camera>
     </Drawer>

@@ -1,46 +1,54 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import React, { useMemo } from 'react';
+import { View, Text } from 'react-native';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import tw from '../../lib/tailwind';
 
-const Sounds = () => {
-  // ref
-  const bottomSheetRef = useRef < BottomSheet > null;
-
+const Sounds = ({ soundsBottomSheetRef }) => {
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['92%'], []);
 
-  // callbacks
-  const handleSheetChanges = useCallback(() => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  // renders
   return (
-    <View style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-      >
-        <View style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
+    <BottomSheet
+      ref={soundsBottomSheetRef}
+      index={-1}
+      snapPoints={snapPoints}
+      enablePanDownToClose={true}
+      backdropComponent={(props) => (
+        <BottomSheetBackdrop
+          {...props}
+          opacity={0.7}
+          enableTouchThrough={false}
+          disappearsOnIndex={-1}
+        />
+      )}
+    >
+      <View style={tw`m-4 mt-2 h-5/6 p-2`}>
+        <Text style={tw`text-3.5xl font-800 text-sh-dark-blue text-center`}>
+          Sounds
+        </Text>
+        <View
+          style={tw`flex flex-row h-14 w-full border border-zinc-800 bg-[#E65C4FCC] rounded-lg items-center px-4 mt-4`}
+        >
+          <Text style={tw`text-xl font-600 text-sh-dark-blue `}>Sound 1</Text>
         </View>
-      </BottomSheet>
-    </View>
+        <View
+          style={tw`flex flex-row h-14 w-full border border-zinc-800 bg-[#E65C4FCC] rounded-lg items-center px-4 mt-4`}
+        >
+          <Text style={tw`text-xl font-600 text-sh-dark-blue `}>Sound 1</Text>
+        </View>
+        <View
+          style={tw`flex flex-row h-14 w-full border border-zinc-800 bg-[#E65C4FCC] rounded-lg items-center px-4 mt-4`}
+        >
+          <Text style={tw`text-xl font-600 text-sh-dark-blue `}>Sound 1</Text>
+        </View>
+        <View
+          style={tw`flex flex-row h-14 w-full border border-zinc-800 bg-[#E65C4FCC] rounded-lg items-center px-4 mt-4`}
+        >
+          <Text style={tw`text-xl font-600 text-sh-dark-blue `}>Sound 1</Text>
+        </View>
+      </View>
+    </BottomSheet>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: 'grey',
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-});
 
 export default Sounds;

@@ -7,7 +7,9 @@ module.exports = {
         'sh-grey': '#B0B7B4',
       },
       fontSize: {
+        '1.5xl': '1.375rem',
         '2.5xl': '1.6875rem',
+        '3.5xl': '2.0625rem',
       },
       fontFamily: {
         os: ['OpenSans_400Regular', 'ui-sans-serif', 'system-ui'],
