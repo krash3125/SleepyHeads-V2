@@ -3,13 +3,13 @@ import { View, Text } from 'react-native';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import tw from '../../lib/tailwind';
 
-const Sounds = ({ soundsBottomSheetRef }) => {
+const Help = ({ helpBottomSheetRef }) => {
   // variables
   const snapPoints = useMemo(() => ['95%'], []);
 
   return (
     <BottomSheet
-      ref={soundsBottomSheetRef}
+      ref={helpBottomSheetRef}
       index={-1}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
@@ -58,4 +58,4 @@ const Sounds = ({ soundsBottomSheetRef }) => {
   );
 };
 
-export default Sounds;
+export default Help;

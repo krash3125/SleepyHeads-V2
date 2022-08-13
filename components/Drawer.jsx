@@ -1,24 +1,16 @@
-import React from 'react';
-import { View, Text, SafeAreaView, Image, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, SafeAreaView, Image, Dimensions } from 'react-native';
 import tw from '../lib/tailwind';
-import { Dimensions } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
 
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import icon from '../assets/icon.png';
 import DrawerItems from './DrawerItems';
 import Sounds from './BottomSheets/Sounds';
 
-import { Feather } from '@expo/vector-icons';
-import { Sound } from 'expo-av/build/Audio';
-
-import { BlurView } from 'expo-blur';
-
 const screenWidth = Dimensions.get('window').width;
 
 const Drawer = ({ children, drawerRef, pausePreview, resumePreview }) => {
   const soundsBottomSheetRef = useRef();
-  const [anyBottomSheetOpen, setAnyBottomSheetOpen] = useState(false);
 
   const drawerView = () => {
     return (
@@ -59,10 +51,7 @@ const Drawer = ({ children, drawerRef, pausePreview, resumePreview }) => {
       >
         {children}
       </DrawerLayout>
-      <Sounds
-        soundsBottomSheetRef={soundsBottomSheetRef}
-        setAnyBottomSheetOpen={setAnyBottomSheetOpen}
-      />
+      <Sounds soundsBottomSheetRef={soundsBottomSheetRef} />
     </>
   );
 };

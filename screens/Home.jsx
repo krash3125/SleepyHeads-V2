@@ -107,14 +107,31 @@ const Home = () => {
         }}
       >
         <SafeAreaView style={tw`flex-1`}>
-          <View style={tw`flex-1 m-6`}>
-            <TouchableOpacity
-              onPress={() => {
-                drawerRef.current.openDrawer();
-              }}
+          <View style={tw`flex-1 flex flex-col m-6`}>
+            <View style={tw`flex flex-row`}>
+              <TouchableOpacity
+                onPress={() => {
+                  drawerRef.current.openDrawer();
+                }}
+              >
+                <Feather name="menu" size={28} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`ml-auto`}
+                onPress={() => {
+                  // drawerRef.current.openDrawer();
+                }}
+              >
+                <Feather name="help-circle" size={28} color="white" />
+              </TouchableOpacity>
+            </View>
+            {/* <View
+              style={tw`justify-center items-center mt-auto border-2 border-slate-800 rounded-lg bg-green-500 w-full h-16`}
             >
-              <Feather name="menu" size={28} color="white" />
-            </TouchableOpacity>
+              <Text style={tw`text-lg font-600 text-sh-dark-blue`}>
+                Good Job Staying Awake!!
+              </Text>
+            </View> */}
           </View>
         </SafeAreaView>
       </Camera>

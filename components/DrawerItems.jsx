@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import tw from '../lib/tailwind';
 
