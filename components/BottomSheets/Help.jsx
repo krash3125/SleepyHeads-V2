@@ -13,13 +13,6 @@ const Help = ({ helpBottomSheetRef }) => {
       index={-1}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      onChange={(index) => {
-        if (index !== -1) {
-          setAnyBottomSheetOpen(true);
-        } else {
-          setAnyBottomSheetOpen(false);
-        }
-      }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop
           {...props}
