@@ -14,7 +14,7 @@ import Drawer from '../components/Drawer';
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.8; //in seconds
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(CameraType.front);
 
@@ -71,11 +71,11 @@ const Home = ({ navigation }) => {
   };
 
   const pausePreview = () => {
-    cameraRef.pausePreview();
+    cameraRef.current.pausePreview();
     setDrawerOpen(true);
   };
   const resumePreview = () => {
-    cameraRef.resumePreview();
+    cameraRef.current.resumePreview();
     setDrawerOpen(false);
   };
 
@@ -90,7 +90,7 @@ const Home = ({ navigation }) => {
     >
       {drawerOpen && (
         <BlurView
-          style={tw`absolute top-0 left-0 h-full w-full z-50`}
+          style={tw`absolute top-0 left-0 h-full w-full z-30`}
           intensity={50}
         />
       )}

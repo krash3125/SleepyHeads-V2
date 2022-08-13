@@ -1,46 +1,38 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import tw from '../../lib/tailwind';
 
-const Sounds = () => {
-  // ref
-  const bottomSheetRef = useRef < BottomSheet > null;
+import { BlurView } from 'expo-blur';
 
+const Sounds = ({ soundsBottomSheetRef, setAnyBottomSheetOpen }) => {
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['25%', '50%', '95%'], []);
 
-  // callbacks
-  const handleSheetChanges = useCallback(() => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  // renders
   return (
-    <View style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-      >
-        <View style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-        </View>
-      </BottomSheet>
-    </View>
+    <BottomSheet
+      ref={soundsBottomSheetRef}
+      index={-1}
+      snapPoints={snapPoints}
+      enablePanDownToClose={true}
+      onChange={(index) => {
+        if (index !== -1) {
+          setAnyBottomSheetOpen(true);
+        } else {
+          setAnyBottomSheetOpen(false);
+        }
+      }}
+      backdropComponent={() => (
+        <>
+          <BottomSheetBackdrop animatedIndex={1} appearsOnIndex={2} />
+        </>
+      )}
+    >
+      <View>
+        <Text>Awesome 🎉</Text>
+      </View>
+    </BottomSheet>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: 'grey',
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-});
 
 export default Sounds;
