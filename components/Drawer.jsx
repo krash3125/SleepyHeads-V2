@@ -36,9 +36,7 @@ const Drawer = ({ children, drawerRef, pausePreview, resumePreview }) => {
 
   return (
     <DrawerLayout
-      ref={(drawer) => {
-        drawerRef.current = drawer;
-      }}
+      ref={drawerRef}
       drawerWidth={screenWidth * 0.8}
       drawerPosition={DrawerLayout.positions.Left}
       drawerType="front"

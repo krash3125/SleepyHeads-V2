@@ -23,9 +23,9 @@ const Home = ({ navigation }) => {
 
   const [faceVisible, setFaceVisible] = useState(false);
   const [eyeOpen, setEyeOpen] = useState(true);
-
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  let cameraRef = useRef();
   let drawerRef = useRef();
 
   useEffect(() => {
@@ -70,8 +70,6 @@ const Home = ({ navigation }) => {
     await sound.playAsync();
   };
 
-  let cameraRef = useRef();
-
   const pausePreview = () => {
     cameraRef.pausePreview();
     setDrawerOpen(true);
@@ -97,9 +95,7 @@ const Home = ({ navigation }) => {
         />
       )}
       <Camera
-        ref={(ref) => {
-          cameraRef = ref;
-        }}
+        ref={cameraRef}
         style={tw`flex-1`}
         type={type}
         onFacesDetected={handleFacesDetected}
@@ -115,7 +111,6 @@ const Home = ({ navigation }) => {
             <TouchableOpacity
               onPress={() => {
                 drawerRef.current.openDrawer();
-                cameraRef.pausePreview();
               }}
             >
               <Feather name="menu" size={28} color="white" />
