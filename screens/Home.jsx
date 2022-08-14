@@ -47,7 +47,6 @@ const Home = () => {
 
   const handleFacesDetected = ({ faces }) => {
     try {
-      console.log(eyeCloseInARow);
       if (eyeCloseInARow > eyeCloseTime * 10) {
         //eyes are closed for longer duration
         setEyeOpen(false);
