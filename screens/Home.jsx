@@ -14,11 +14,13 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Drawer from '../components/Drawer';
 import Help from '../components/BottomSheets/Help';
 
+import Permissions from './Permissions';
+
 let eyeCloseInARow = 0;
-const eyeCloseTime = 0.8; //in seconds
+const eyeCloseTime = 0.4; //in seconds
 
 const Home = () => {
-  const [hasPermission, setHasPermission] = useState(false);
+  const [hasPermission, setHasPermission] = useState(true);
   const [type, setType] = useState(CameraType.front);
 
   const [sound, setSound] = useState();
@@ -44,12 +46,13 @@ const Home = () => {
   }, []);
 
   const handleFacesDetected = ({ faces }) => {
-    if (eyeCloseInARow > eyeCloseTime * 10) {
-      //eyes are closed for longer duration
-      if (!soundPlaying) playSound();
-      setEyeOpen(false);
-    }
     try {
+      console.log(eyeCloseInARow);
+      if (eyeCloseInARow > eyeCloseTime * 10) {
+        //eyes are closed for longer duration
+        setEyeOpen(false);
+        if (!soundPlaying) playSound();
+      }
       if (
         faces[0].leftEyeOpenProbability < 0.15 ||
         faces[0].rightEyeOpenProbability < 0.15
@@ -84,7 +87,7 @@ const Home = () => {
   };
 
   if (hasPermission == null || !hasPermission) {
-    return <Text>Camera permissions were denied, Restart App!</Text>;
+    return <Permissions Camera={Camera} setHasPermission={setHasPermission} />;
   }
   return (
     <Drawer
@@ -108,6 +111,7 @@ const Home = () => {
           detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
           runClassifications: FaceDetector.FaceDetectorClassifications.all,
           minDetectionInterval: 100,
+          tracking: true,
         }}
       >
         <BlurView

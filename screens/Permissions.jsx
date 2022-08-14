@@ -1,22 +1,19 @@
 import React from 'react';
 
-import {
-  View,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-  Text,
-  Switch,
-} from 'react-native';
+import { View, SafeAreaView, Text, Switch } from 'react-native';
+
 import tw from '../lib/tailwind.js';
 
-const Permissions = ({ navigation }) => {
+const Permissions = ({ Camera, setHasPermission }) => {
   return (
     <SafeAreaView style={tw`flex-1`}>
-      <View style={tw`flex-1 mx-8`}>
-        {/* <Text style={tw`mt-4 text-3xl font-800 text-center text-sh-dark-blue`}>
-          Sleepy Heads needs your Permissions
-        </Text> */}
+      <View style={tw`flex-1 mx-8 mt-6`}>
+        <Text
+          style={tw`mt-4 mb-3 text-center text-3.5xl font-800 text-sh-dark-blue`}
+        >
+          Permissions
+        </Text>
+        <View style={tw`w-3/4 mx-auto border-b border-sh-dark-blue`} />
         <View style={tw`flex flex-row mt-8 items-center`}>
           <Text style={tw`text-3xl font-800 text-center text-sh-dark-blue`}>
             Camera
