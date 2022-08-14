@@ -52,9 +52,9 @@ Our next steps are to get certified Apple licensing and Android licensing to pub
      <td>Help Page</td>
   </tr>
   <tr>
-    <td><img src="./assets/screen-images/Sounds.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/About.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/Help.png" width=280 height=560></td>
+    <td><img src="./assets/screen-images/Sounds.png" width=300 height=560></td>
+    <td><img src="./assets/screen-images/About.png" width=300 height=560></td>
+    <td><img src="./assets/screen-images/Help.png" width=300 height=560></td>
   </tr>
  </table>
 
