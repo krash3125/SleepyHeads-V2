@@ -5,7 +5,6 @@ import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import tw from '../../lib/tailwind';
 
 const Sounds = ({ soundsBottomSheetRef }) => {
-  // variables
   const snapPoints = useMemo(() => ['92%'], []);
   const [sound, setSound] = useState(0);
 
