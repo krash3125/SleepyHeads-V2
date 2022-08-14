@@ -43,10 +43,6 @@ const Home = () => {
     })();
   }, []);
 
-  const SwitchCameraFacing = () => {
-    setType(type === CameraType.back ? CameraType.front : CameraType.back);
-  };
-
   const handleFacesDetected = ({ faces }) => {
     if (eyeCloseInARow > eyeCloseTime * 10) {
       //eyes are closed for longer duration
@@ -166,9 +162,9 @@ const Home = () => {
               </View>
             </View>
           }
-          <Help style={tw`z-50`} helpBottomSheetRef={helpBottomSheetRef} />
         </SafeAreaView>
       </Camera>
+      <Help style={tw`z-50`} helpBottomSheetRef={helpBottomSheetRef} />
     </Drawer>
   );
 };

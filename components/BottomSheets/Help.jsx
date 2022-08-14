@@ -8,7 +8,7 @@ import tw from '../../lib/tailwind';
 
 const Help = ({ helpBottomSheetRef }) => {
   // variables
-  const snapPoints = useMemo(() => ['76%'], []);
+  const snapPoints = useMemo(() => ['68%'], []);
 
   return (
     <BottomSheet
@@ -17,7 +17,7 @@ const Help = ({ helpBottomSheetRef }) => {
       index={-1}
       snapPoints={snapPoints}
       detached={true}
-      bottomInset={19}
+      bottomInset={46}
       enableOverDrag={false}
       enablePanDownToClose={true}
       backdropComponent={(props) => (
