@@ -59,8 +59,10 @@ const Home = () => {
       ) {
         eyeCloseInARow++;
       } else {
-        if (soundPlaying) sound.unloadAsync();
         setSoundPlaying(false);
+        try {
+          sound.unloadAsync();
+        } catch (e) {}
         setEyeOpen(true);
         eyeCloseInARow = 0;
       }
