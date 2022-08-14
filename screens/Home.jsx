@@ -50,6 +50,7 @@ const Home = () => {
       if (eyeCloseInARow > eyeCloseTime * 10) {
         //eyes are closed for longer duration
         setEyeOpen(false);
+        if (!soundPlaying) console.log('playing');
         if (!soundPlaying) playSound();
       }
       if (
@@ -59,6 +60,7 @@ const Home = () => {
         eyeCloseInARow++;
       } else {
         if (soundPlaying) sound.unloadAsync();
+        setSoundPlaying(false);
         setEyeOpen(true);
         eyeCloseInARow = 0;
       }
@@ -69,8 +71,10 @@ const Home = () => {
   };
 
   const playSound = async () => {
+    setSoundPlaying(true);
     const { sound } = await Audio.Sound.createAsync(
-      require('../assets/mp3/sound1.wav')
+      require('../assets/mp3/sound1.wav'),
+      { isLooping: true }
     );
     setSound(sound);
     await sound.playAsync();
