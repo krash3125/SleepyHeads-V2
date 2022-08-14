@@ -22,7 +22,7 @@ const SplashScreen = ({ navigation }) => {
         <Text style={tw`text-lg text-center`}>Driving safely made easy</Text>
         <TouchableOpacity
           style={[
-            tw`w-3/4 mt-8 mx-auto p-3 rounded-md`,
+            tw`w-3/4 mt-16 mx-auto p-3 rounded-md`,
             { backgroundColor: '#3C66FF' },
           ]}
           onPress={() => navigation.replace('Home')}
