@@ -40,30 +40,18 @@ Our next steps are to get certified Apple licensing and Android licensing to pub
      <td>Splash Screen</td>
      <td>Home Screen</td>
      <td>Drawer Page</td>
-     <td>Sounds Page</td>
-     <td>About Page</td>
-     <td>Help Page</td>
   </tr>
   <tr>
     <td><img src="./assets/screen-images/Splash.png" width=280 height=560></td>
     <td><img src="./assets/screen-images/Home.png" width=280 height=560></td>
     <td><img src="./assets/screen-images/Drawer.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/Sounds.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/About.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/Help.png" width=280 height=560></td>
   </tr>
   <tr>
-     <td>Splash Screen</td>
-     <td>Home Screen</td>
-     <td>Drawer Page</td>
      <td>Sounds Page</td>
      <td>About Page</td>
      <td>Help Page</td>
   </tr>
   <tr>
-    <td><img src="./assets/screen-images/Splash.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/Home.png" width=280 height=560></td>
-    <td><img src="./assets/screen-images/Drawer.png" width=280 height=560></td>
     <td><img src="./assets/screen-images/Sounds.png" width=280 height=560></td>
     <td><img src="./assets/screen-images/About.png" width=280 height=560></td>
     <td><img src="./assets/screen-images/Help.png" width=280 height=560></td>
