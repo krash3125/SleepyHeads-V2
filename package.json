@@ -1,7 +1,8 @@
 {
-  "name": "sleepy-heads-remake",
-  "version": "1.0.0",
+  "name": "SleepyHeads",
+  "version": "0.9.0",
   "main": "node_modules/expo/AppEntry.js",
+  "owner": "krash3125",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
