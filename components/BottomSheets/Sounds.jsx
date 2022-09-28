@@ -30,14 +30,14 @@ const Sounds = ({ soundsBottomSheetRef }) => {
         <BouncyCheckbox
           isChecked={sound === 0}
           disableBuiltInState={true}
-          text="Sound 1"
+          text="Joyful Sound"
           style={tw`flex flex-row h-14 w-full border border-zinc-800 bg-sh-dark-blue rounded-lg items-center px-4 mt-4`}
           textStyle={tw`text-xl font-600 text-white no-underline tracking-widest`}
           innerIconStyle={tw`border border-[#E98F50]`}
           fillColor="#E98F50"
           onPress={() => setSound(0)}
         />
-        <BouncyCheckbox
+        {/* <BouncyCheckbox
           isChecked={sound === 1}
           disableBuiltInState={true}
           text="Sound 2"
@@ -56,7 +56,7 @@ const Sounds = ({ soundsBottomSheetRef }) => {
           innerIconStyle={tw`border border-[#E98F50]`}
           fillColor="#E98F50"
           onPress={() => setSound(2)}
-        />
+        /> */}
       </View>
     </BottomSheet>
   );

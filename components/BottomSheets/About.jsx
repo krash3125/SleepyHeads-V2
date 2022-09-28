@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 import tw from '../../lib/tailwind';
 
 const About = ({ aboutBottomSheetRef }) => {
@@ -21,7 +24,7 @@ const About = ({ aboutBottomSheetRef }) => {
         />
       )}
     >
-      <View style={tw`m-4 mt-2 h-[95%] p-2`}>
+      <BottomSheetScrollView style={tw`m-4 mt-2 h-[95%] p-2`}>
         <Text style={tw`text-3.5xl font-800 text-sh-dark-blue text-center`}>
           About
         </Text>
@@ -41,7 +44,7 @@ const About = ({ aboutBottomSheetRef }) => {
           machine learning to determine the state of a driver's eye and alert
           them if they are dosing off.
         </Text>
-      </View>
+      </BottomSheetScrollView>
     </BottomSheet>
   );
 };

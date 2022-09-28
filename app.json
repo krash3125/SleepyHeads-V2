@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "sleepy-heads-remake",
-    "slug": "sleepy-heads-remake",
+    "name": "SleepyHeads - Stay Focused",
+    "slug": "sleepyheads-stay-focused",
+    "owner": "krashdev",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +19,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.krashdev.sleepyheads-stay-focused"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dc4ff868-6b59-4764-b81f-05953657fbb3"
+      }
     }
   }
 }

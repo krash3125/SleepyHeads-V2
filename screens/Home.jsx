@@ -15,6 +15,7 @@ import Drawer from '../components/Drawer';
 import Help from '../components/BottomSheets/Help';
 
 import Permissions from './Permissions';
+import { StatusBar } from 'expo-status-bar';
 
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.4; //in seconds
@@ -41,6 +42,9 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+      });
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -50,7 +54,6 @@ const Home = () => {
       if (eyeCloseInARow > eyeCloseTime * 10) {
         //eyes are closed for longer duration
         setEyeOpen(false);
-        if (!soundPlaying) console.log('playing');
         if (!soundPlaying) playSound();
       }
       if (
@@ -86,6 +89,7 @@ const Home = () => {
     cameraRef.current.pausePreview();
     setDrawerOpen(true);
   };
+
   const resumePreview = () => {
     cameraRef.current.resumePreview();
     setDrawerOpen(false);
@@ -100,6 +104,7 @@ const Home = () => {
       pausePreview={pausePreview}
       resumePreview={resumePreview}
     >
+      <StatusBar style="light" />
       {drawerOpen && (
         <BlurView
           style={tw`absolute top-0 left-0 h-full w-full z-30`}
