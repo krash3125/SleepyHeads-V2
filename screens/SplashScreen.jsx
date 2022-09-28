@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import tw from '../lib/tailwind.js';
-
 import fullLogo from '../assets/fullLogo.png';
 
 const SplashScreen = ({ navigation }) => {
