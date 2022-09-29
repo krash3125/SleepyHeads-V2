@@ -3,7 +3,7 @@
     "name": "SleepyHeads - Stay Focused",
     "slug": "sleepyheads-stay-focused",
     "owner": "krashdev",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
@@ -33,6 +33,21 @@
       "eas": {
         "projectId": "dc4ff868-6b59-4764-b81f-05953657fbb3"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow SleepyHeads to access your camera"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/logo.png",
+          "color": "#ffffff"
+        }
+      ]
+    ]
   }
 }

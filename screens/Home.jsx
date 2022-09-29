@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { View, Text, Image } from 'react-native';
-import { SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  AppState,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import tw from '../lib/tailwind';
+
+import * as Notifications from 'expo-notifications';
+import { useKeepAwake } from 'expo-keep-awake';
 
 import { Camera, CameraType } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
@@ -20,7 +28,16 @@ import { StatusBar } from 'expo-status-bar';
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.4; //in seconds
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 const Home = () => {
+  useKeepAwake();
   const [hasPermission, setHasPermission] = useState(true);
   const [type, setType] = useState(CameraType.front);
 
@@ -49,6 +66,61 @@ const Home = () => {
     })();
   }, []);
 
+  //-----------Notifications--------------
+
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        //App has come to the foreground!
+      } else if (
+        appState.current.match(/active/) &&
+        nextAppState === 'background'
+      ) {
+        //App has gone to the background!
+        schedulePushNotification();
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'SleepyHeads Alert',
+        body: 'Monitoring is paused return to app to resume.',
+      },
+      trigger: null,
+    });
+  }
+
+  async function registerForPushNotificationsAsync() {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+  }
+
+  //-------------------------
   const handleFacesDetected = ({ faces }) => {
     try {
       if (eyeCloseInARow > eyeCloseTime * 10) {
