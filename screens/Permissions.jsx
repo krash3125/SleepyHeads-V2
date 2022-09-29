@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { View, SafeAreaView, Text, Switch } from 'react-native';
-
 import tw from '../lib/tailwind.js';
 
 const Permissions = ({ Camera, setHasPermission }) => {
@@ -29,7 +27,9 @@ const Permissions = ({ Camera, setHasPermission }) => {
           />
         </View>
         <Text style={tw`mt-4 text-lg text-center text-sh-grey`}>
-          We need camera permissions for this app to work properly.
+          We need camera permissions for this app to work properly. If switch
+          doesn't work go to settings scroll down to "SleepyHeads - Stay
+          Focused" and enable camera permissions manually.
         </Text>
       </View>
     </SafeAreaView>

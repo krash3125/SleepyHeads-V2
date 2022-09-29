@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
 import { View, Text, Image } from 'react-native';
 import {
   AppState,
@@ -48,6 +54,9 @@ const Home = () => {
   const [eyeOpen, setEyeOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
   const statusBarHeight = useMemo(() => {
     return getStatusBarHeight();
   }, []);
@@ -59,10 +68,12 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+      registerForPushNotificationsAsync();
       await Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
       });
-      setHasPermission(status === 'granted');
+      forceUpdate();
     })();
   }, []);
 
@@ -90,10 +101,6 @@ const Home = () => {
     return () => {
       subscription.remove();
     };
-  }, []);
-
-  useEffect(() => {
-    registerForPushNotificationsAsync();
   }, []);
 
   async function schedulePushNotification() {
