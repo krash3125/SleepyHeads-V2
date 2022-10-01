@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   SafeAreaView,
@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import { Camera } from 'expo-camera';
 
 import tw from '../lib/tailwind.js';
 import fullLogo from '../assets/fullLogo.png';
 
 const SplashScreen = ({ navigation }) => {
+  const [permission, _] = Camera.useCameraPermissions();
+
   return (
     <SafeAreaView style={tw`flex-1`}>
       <View style={tw`flex-1`}>
@@ -24,7 +27,9 @@ const SplashScreen = ({ navigation }) => {
             tw`w-3/4 mt-16 mx-auto p-3 rounded-md`,
             { backgroundColor: '#3C66FF' },
           ]}
-          onPress={() => navigation.replace('Home')}
+          onPress={() =>
+            navigation.replace(permission.granted ? 'Home' : 'Permissions')
+          }
         >
           <Text style={tw`text-center font-semibold text-white`}>
             Let's Start

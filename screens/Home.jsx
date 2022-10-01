@@ -6,12 +6,7 @@ import React, {
   useMemo,
 } from 'react';
 import { View, Text, Image } from 'react-native';
-import {
-  AppState,
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { AppState, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import tw from '../lib/tailwind';
 
@@ -42,9 +37,9 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const Home = () => {
+const Home = ({ navigation }) => {
   useKeepAwake();
-  const [hasPermission, setHasPermission] = useState(true);
+  const [cameraPermissions, setCameraPermissions] = useState(true);
   const [type, setType] = useState(CameraType.front);
 
   const [sound, setSound] = useState();
@@ -53,9 +48,6 @@ const Home = () => {
   const [faceVisible, setFaceVisible] = useState(false);
   const [eyeOpen, setEyeOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
 
   const statusBarHeight = useMemo(() => {
     return getStatusBarHeight();
@@ -67,13 +59,14 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-      registerForPushNotificationsAsync();
+      const { status } = await Camera.getCameraPermissionsAsync();
+      setCameraPermissions(status === 'granted');
+      if (status !== 'granted') {
+        navigation.replace('Permissions');
+      }
       await Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
       });
-      forceUpdate();
     })();
   }, []);
 
@@ -82,49 +75,43 @@ const Home = () => {
   const appState = useRef(AppState.currentState);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', (nextAppState) => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
-        //App has come to the foreground!
-      } else if (
-        appState.current.match(/active/) &&
-        nextAppState === 'background'
-      ) {
-        //App has gone to the background!
-        schedulePushNotification();
-      }
-      appState.current = nextAppState;
-    });
+    (async () => {
+      const { status } = await Notifications.getPermissionsAsync();
+      if (status === 'granted') {
+        const subscription = AppState.addEventListener(
+          'change',
+          (nextAppState) => {
+            if (
+              appState.current.match(/inactive|background/) &&
+              nextAppState === 'active'
+            ) {
+              //App has come to the foreground!
+            } else if (
+              appState.current.match(/active/) &&
+              nextAppState === 'background'
+            ) {
+              //App has gone to the background!
+              schedulePushNotification();
+            }
+            appState.current = nextAppState;
+          }
+        );
 
-    return () => {
-      subscription.remove();
-    };
+        return () => {
+          subscription.remove();
+        };
+      }
+    })();
   }, []);
 
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: 'SleepyHeads Alert',
-        body: 'Monitoring is paused return to app to resume.',
+        body: 'Monitoring is paused, tap here resume.',
       },
       trigger: null,
     });
-  }
-
-  async function registerForPushNotificationsAsync() {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
   }
 
   //-------------------------
@@ -151,6 +138,12 @@ const Home = () => {
       setFaceVisible(true);
     } catch (e) {
       setFaceVisible(false);
+      if (soundPlaying) {
+        setSoundPlaying(false);
+        try {
+          sound.unloadAsync();
+        } catch (e) {}
+      }
     }
   };
 
@@ -174,8 +167,8 @@ const Home = () => {
     setDrawerOpen(false);
   };
 
-  if (hasPermission == null || !hasPermission) {
-    return <Permissions Camera={Camera} setHasPermission={setHasPermission} />;
+  if (cameraPermissions == null || !cameraPermissions) {
+    return <Text>Camera permissions are false.</Text>;
   }
   return (
     <Drawer
