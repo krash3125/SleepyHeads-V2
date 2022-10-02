@@ -26,6 +26,8 @@ import Help from '../components/BottomSheets/Help';
 import Permissions from './Permissions';
 import { StatusBar } from 'expo-status-bar';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.4; //in seconds
 
@@ -44,6 +46,7 @@ const Home = ({ navigation }) => {
 
   const [sound, setSound] = useState();
   const [soundPlaying, setSoundPlaying] = useState(false);
+  const [songName, setSongName] = useState('sound1.wav');
 
   const [faceVisible, setFaceVisible] = useState(false);
   const [eyeOpen, setEyeOpen] = useState(true);
@@ -69,6 +72,26 @@ const Home = ({ navigation }) => {
       });
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (!drawerOpen) {
+        try {
+          const value = await AsyncStorage.getItem('song_name');
+          if (value !== null) {
+            setSongName(value);
+          }
+        } catch (e) {}
+      } else {
+        if (soundPlaying) {
+          setSoundPlaying(false);
+          try {
+            sound.unloadAsync();
+          } catch (e) {}
+        }
+      }
+    })();
+  }, [drawerOpen]);
 
   //-----------Notifications--------------
 
@@ -116,6 +139,7 @@ const Home = ({ navigation }) => {
 
   //-------------------------
   const handleFacesDetected = ({ faces }) => {
+    if (drawerOpen) return;
     try {
       if (eyeCloseInARow > eyeCloseTime * 10) {
         //eyes are closed for longer duration
@@ -149,12 +173,28 @@ const Home = ({ navigation }) => {
 
   const playSound = async () => {
     setSoundPlaying(true);
-    const { sound } = await Audio.Sound.createAsync(
-      require('../assets/mp3/sound1.wav'),
-      { isLooping: true }
-    );
-    setSound(sound);
-    await sound.playAsync();
+    if (songName === 'sound2.wav') {
+      const { sound } = await Audio.Sound.createAsync(
+        require('../assets/mp3/sound2.wav'),
+        { isLooping: true }
+      );
+      setSound(sound);
+      await sound.playAsync();
+    } else if (songName === 'sound3.mp3') {
+      const { sound } = await Audio.Sound.createAsync(
+        require('../assets/mp3/sound3.mp3'),
+        { isLooping: true }
+      );
+      setSound(sound);
+      await sound.playAsync();
+    } else {
+      const { sound } = await Audio.Sound.createAsync(
+        require('../assets/mp3/sound1.wav'),
+        { isLooping: true }
+      );
+      setSound(sound);
+      await sound.playAsync();
+    }
   };
 
   const pausePreview = () => {
