@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import tw from '../../lib/tailwind';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useMemo, useState } from 'react';
+import { Text, View } from 'react-native';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import tw from '../../lib/tailwind';
 
 const Sounds = ({ soundsBottomSheetRef }) => {
   const snapPoints = useMemo(() => ['92%'], []);

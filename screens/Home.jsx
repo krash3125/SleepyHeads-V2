@@ -1,32 +1,24 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useMemo,
-} from 'react';
-import { View, Text, Image } from 'react-native';
-import { AppState, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import tw from '../lib/tailwind';
-
-import * as Notifications from 'expo-notifications';
-import { useKeepAwake } from 'expo-keep-awake';
-
-import { Camera, CameraType } from 'expo-camera';
-import * as FaceDetector from 'expo-face-detector';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { BlurView } from 'expo-blur';
-
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-
-import Drawer from '../components/Drawer';
-import Help from '../components/BottomSheets/Help';
-
-import Permissions from './Permissions';
+import { Camera, CameraType } from 'expo-camera';
+import * as FaceDetector from 'expo-face-detector';
+import { useKeepAwake } from 'expo-keep-awake';
+import * as Notifications from 'expo-notifications';
 import { StatusBar } from 'expo-status-bar';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  AppState,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Help from '../components/BottomSheets/Help';
+import Drawer from '../components/Drawer';
+import tw from '../lib/tailwind';
 
 let eyeCloseInARow = 0;
 const eyeCloseTime = 0.4; //in seconds

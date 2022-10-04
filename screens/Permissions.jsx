@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, Text, Switch, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Notifications from 'expo-notifications';
-import tw from '../lib/tailwind.js';
+import { useEffect, useState } from 'react';
+import { SafeAreaView, Switch, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import tw from '../lib/tailwind.js';
 
 const Permissions = ({ navigation }) => {
   const [cameraPermissions, setCameraPermissions] = useState(false);
