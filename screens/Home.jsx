@@ -34,11 +34,9 @@ Notifications.setNotificationHandler({
 const Home = ({ navigation }) => {
   useKeepAwake();
   const [cameraPermissions, setCameraPermissions] = useState(true);
-  const [type, setType] = useState(CameraType.front);
 
   const [sound, setSound] = useState();
   const [soundPlaying, setSoundPlaying] = useState(false);
-  const [songName, setSongName] = useState('sound1.wav');
 
   const [faceVisible, setFaceVisible] = useState(false);
   const [eyeOpen, setEyeOpen] = useState(true);
@@ -71,9 +69,33 @@ const Home = ({ navigation }) => {
         try {
           const value = await AsyncStorage.getItem('song_name');
           if (value !== null) {
-            setSongName(value);
+            if (value === 'sound2.wav') {
+              const { sound } = await Audio.Sound.createAsync(
+                require('../assets/mp3/sound2.wav'),
+                { isLooping: true }
+              );
+              setSound(sound);
+            } else if (value === 'sound3.mp3') {
+              const { sound } = await Audio.Sound.createAsync(
+                require('../assets/mp3/sound3.mp3'),
+                { isLooping: true }
+              );
+              setSound(sound);
+            } else {
+              const { sound } = await Audio.Sound.createAsync(
+                require('../assets/mp3/sound1.wav'),
+                { isLooping: true }
+              );
+              setSound(sound);
+            }
           }
-        } catch (e) {}
+        } catch (e) {
+          const { sound } = await Audio.Sound.createAsync(
+            require('../assets/mp3/sound1.wav'),
+            { isLooping: true }
+          );
+          setSound(sound);
+        }
       } else {
         if (soundPlaying) {
           setSoundPlaying(false);
@@ -144,10 +166,7 @@ const Home = ({ navigation }) => {
       ) {
         eyeCloseInARow++;
       } else {
-        setSoundPlaying(false);
-        try {
-          sound.unloadAsync();
-        } catch (e) {}
+        pauseSound();
         setEyeOpen(true);
         eyeCloseInARow = 0;
       }
@@ -155,38 +174,19 @@ const Home = ({ navigation }) => {
     } catch (e) {
       setFaceVisible(false);
       if (soundPlaying) {
-        setSoundPlaying(false);
-        try {
-          sound.unloadAsync();
-        } catch (e) {}
+        pauseSound();
       }
     }
   };
 
   const playSound = async () => {
     setSoundPlaying(true);
-    if (songName === 'sound2.wav') {
-      const { sound } = await Audio.Sound.createAsync(
-        require('../assets/mp3/sound2.wav'),
-        { isLooping: true }
-      );
-      setSound(sound);
-      await sound.playAsync();
-    } else if (songName === 'sound3.mp3') {
-      const { sound } = await Audio.Sound.createAsync(
-        require('../assets/mp3/sound3.mp3'),
-        { isLooping: true }
-      );
-      setSound(sound);
-      await sound.playAsync();
-    } else {
-      const { sound } = await Audio.Sound.createAsync(
-        require('../assets/mp3/sound1.wav'),
-        { isLooping: true }
-      );
-      setSound(sound);
-      await sound.playAsync();
-    }
+    await sound.playAsync();
+  };
+
+  const pauseSound = async () => {
+    setSoundPlaying(false);
+    await sound.pauseAsync();
   };
 
   const pausePreview = () => {
@@ -200,7 +200,14 @@ const Home = ({ navigation }) => {
   };
 
   if (cameraPermissions == null || !cameraPermissions) {
-    return <Text>Camera permissions are false.</Text>;
+    return (
+      <Text>
+        Camera permissions are false. We aren't allowed to ask for camera
+        permissions multiple times, to allow permissions please go to settings
+        search for "SleepyHeads" and manually do so. SleepyHeads doesn't work
+        with out camera permissions.
+      </Text>
+    );
   }
   return (
     <Drawer
@@ -218,7 +225,7 @@ const Home = ({ navigation }) => {
       <Camera
         ref={cameraRef}
         style={tw`flex-1 flex flex-col`}
-        type={type}
+        type={CameraType.front}
         onFacesDetected={handleFacesDetected}
         faceDetectorSettings={{
           mode: FaceDetector.FaceDetectorMode.fast,

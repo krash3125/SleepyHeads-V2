@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
+import { useMemo } from 'react';
+import { Text, View } from 'react-native';
 import tw from '../../lib/tailwind';
 
 const Help = ({ helpBottomSheetRef }) => {
