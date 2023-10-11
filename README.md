@@ -4,7 +4,7 @@
 
 ## Inspiration + What it does
 
-Every year there are an estimated 100,000 crashes related to drowsy driving, which include more than 50,000 injuries and more than 800 deaths. The issue of drowsy driving is even more prevalent in the truck driving industry, due to long hours with continuous driving. The American Trucking Association finds that almost one-third of commercial truck drivers have mild to severe sleep apnea, making them 2.5 times as likely to be in an accident with another motor vehicle. This drowsy driving leads to mental impairment, and studies show that it can take less than two seconds for an accident to occur. To make roads safer for all drivers, we created SleepyHeads, an app that uses machine learning to determine the state of a driver's eye and alert them if they are dosing off. 
+Every year there are an estimated 100,000 crashes related to drowsy driving, which include more than 50,000 injuries and more than 800 deaths. The issue of drowsy driving is even more prevalent in the truck driving industry, due to long hours with continuous driving. The American Trucking Association finds that almost one-third of commercial truck drivers have mild to severe sleep apnea, making them 2.5 times as likely to be in an accident with another motor vehicle. This drowsy driving leads to mental impairment, and studies show that it can take less than two seconds for an accident to occur. To make roads safer for all drivers, we created SleepyHeads, an app that uses machine learning to determine the state of a driver's eye and alert them if they are dosing off.. 
 
 ## How we built it
 
