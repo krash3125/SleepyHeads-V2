@@ -1,13 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import tw from './lib/tailwind';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SplashScreen from './screens/SplashScreen';
 import Home from './screens/Home';
 import Permissions from './screens/Permissions';
+import SplashScreen from './screens/SplashScreen';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -31,7 +27,15 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: false,
+              // headerTitle: 'SleepyHeads',
+              // headerTitleStyle: {
+              //   color: '#222B45',
+              //   fontSize: 28,
+              //   fontWeight: '800',
+              // },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
